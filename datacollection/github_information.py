@@ -430,8 +430,9 @@ class GitHubRepo:
     def build_logs(self, saving_directory=""):
         """
         Calls the build_issue_log and build_pull_request_log methods of this class and generates log DataFrames for:
-        - Issue information
-        - Pull Request information
+        - General Issue information (No log)
+        - General Pull Request information (No log)
+        - General Issue and Pull Request information (No log, combination of the other both information files)
         - Comments on issues of the repository
         - Events of the issues of the repository
         - Issue history containing comments and events

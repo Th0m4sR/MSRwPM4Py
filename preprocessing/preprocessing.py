@@ -1,5 +1,7 @@
 import ast
 import warnings
+import hashlib
+import numpy as np
 from datetime import datetime
 
 import pandas as pd
@@ -101,3 +103,23 @@ def merge_logs(issue_tracking_info,  # DataFrame built from datacollection.githu
     elif issue_type != 'all':
         log = log.loc[log["issue:type"] == issue_type]
     return log
+
+
+def hash_names_and_mails(log_df):
+    """
+    Searches for column names in a dataframe that contain the string "mail" and "name" and hashes each value that is not
+    np.NaN in this column, mails are stored in the format abcdef@ghijk.com
+    :param log_df: The dataframe in which the columns shall be edited
+    :return: The DataFrame with the hashed names and mail addresses
+    """
+    df = log_df.copy()
+    name_edit_columns = [col_name for col_name in df.columns if "name" in col_name]
+    mail_edit_columns = [col_name for col_name in df.columns if "mail" in col_name]
+    for name_col in name_edit_columns:
+        df[name_col] = df[name_col].apply(
+            lambda x: hashlib.md5(str(x).encode()).hexdigest() if ((x is not np.NaN) and (x != "No author") and (x != "No actor")) else np.NaN)
+    for mail_col in mail_edit_columns:
+        df[mail_col] = df[mail_col].apply(
+            lambda x: hashlib.md5(str(x).encode()).hexdigest() if ((x is not np.NaN) and (x != "No author") and (x != "No actor")) else np.NaN)
+        df[mail_col] = [mail[:-9] + "@" + mail[-9:] + ".com" if mail is not np.NaN else np.NaN for mail in df[mail_col]]
+    return df
