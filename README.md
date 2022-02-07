@@ -146,3 +146,7 @@ All classes have an `apply` method that adds a group column to the input log for
 For `OrganizationalMining`, it generates four DataFrames, one for each metric, that contains the computed values.
 
 The `evaluation.py` file has multiple functions. `evaluate_group_coverage`,  `evaluate_group_relative_focus`, `evaluate_member_contribution` and `evaluate_group_relative_stake` compute the mean, variance, minimum and maximum of the DataFrame of each metric. `evaluate_numbers` returns a DataFrame with the number of groups, the number of mappings from an originator to groups, the number of groups of size one and of size greater one and the average group size when groups of size one are considered and when they are ignored.
+
+## Data Sets
+
+The anonymized inpute data sets and generated models can be seen under this link: https://cloud.uni-koblenz-landau.de/s/9NZjagx9ekfEBc5
